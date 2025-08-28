@@ -3,5 +3,5 @@
   "outputDirectory": "build",
   "installCommand": "npm install",
   "framework": "create-react-app",
-  "comment": "Force redeploy - updated with 3D Bangladesh map animation and professional features - " + new Date().toISOString()
+  "comment": "Force redeploy - updated with 3D Bangladesh map animation and professional features - 2024-01-15T12:00:00.000Z"
 }
