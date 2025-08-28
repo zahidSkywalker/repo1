@@ -11,7 +11,7 @@ const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-  const [filterCategory, setFilterStatus] = useState('all');
+  const [filterCategory, setFilterCategory] = useState('all');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // grid or list
 
@@ -315,10 +315,10 @@ const Orders = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                গোষ্ঠী অর্ডার ব্রাউজ করুন
+                দলগত অর্ডার ব্রাউজ করুন
               </h1>
               <p className="text-gray-600 text-lg">
-                আপনার এলাকায় অর্থ সঞ্চয় করার জন্য গোষ্ঠী অর্ডার খুঁজুন এবং যোগ দিন
+                আপনার এলাকায় অর্থ সঞ্চয় করার জন্য দলগত অর্ডার খুঁজুন এবং যোগ দিন
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Browse group orders in your area to save money and join

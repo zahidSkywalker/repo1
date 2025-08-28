@@ -12,6 +12,8 @@ gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
   const { user } = useAuth();
   const containerRef = useRef(null);
+  const mapRef = useRef(null);
+  const cartRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const isInView = useInView(containerRef, { once: true });
 
@@ -39,17 +41,55 @@ const Home = () => {
       { y: 0, opacity: 1, duration: 1 }, "-=0.5"
     );
 
-    // Parallax effect for hero background
-    gsap.to(".hero-bg", {
-      yPercent: -50,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".hero-section",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-      }
-    });
+    // 3D Bangladesh Map Animation
+    if (mapRef.current && cartRef.current) {
+      // Create the 3D map path
+      const mapPath = [
+        { x: 0, y: 0 },
+        { x: 50, y: -20 },
+        { x: 100, y: 10 },
+        { x: 150, y: -30 },
+        { x: 200, y: 20 },
+        { x: 250, y: -10 },
+        { x: 300, y: 40 },
+        { x: 350, y: 0 },
+        { x: 400, y: -25 },
+        { x: 450, y: 15 }
+      ];
+
+      // Animate cart along the map path
+      gsap.to(cartRef.current, {
+        duration: 8,
+        ease: "none",
+        repeat: -1,
+        motionPath: {
+          path: mapPath,
+          curviness: 0.5,
+          autoRotate: true
+        }
+      });
+
+      // Animate GroShare text flipping
+      gsap.to(".groshare-text", {
+        duration: 2,
+        rotationY: 360,
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Parallax effect for hero background
+      gsap.to(".hero-bg", {
+        yPercent: -50,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+    }
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -59,7 +99,7 @@ const Home = () => {
   const features = [
     {
       icon: <ShoppingCart className="w-8 h-8" />,
-      title: 'গোষ্ঠী ক্রয়',
+      title: 'দলগত ক্রয়',
       subtitle: 'Group Buying',
       description: 'আপনার প্রতিবেশীদের সাথে মিলে পাইকারি দামে কেনাকাটা করুন।'
     },
@@ -73,7 +113,7 @@ const Home = () => {
       icon: <DollarSign className="w-8 h-8" />,
       title: 'টাকা সঞ্চয়',
       subtitle: 'Save Money',
-      description: 'গোষ্ঠী ক্রয়ের মাধ্যমে পাইকারি দামে খাবার কিনুন এবং অর্থ সঞ্চয় করুন।'
+      description: 'দলগত ক্রয়ের মাধ্যমে পাইকারি দামে খাবার কিনুন এবং অর্থ সঞ্চয় করুন।'
     },
     {
       icon: <Truck className="w-8 h-8" />,
@@ -88,7 +128,7 @@ const Home = () => {
       number: '১',
       title: 'সৃষ্টি করুন বা যোগ দিন',
       subtitle: 'Create or Join',
-      description: 'আপনার এলাকায় নতুন গোষ্ঠী অর্ডার শুরু করুন বা বিদ্যমান অর্ডারে যোগ দিন।'
+      description: 'আপনার এলাকায় নতুন দলগত অর্ডার শুরু করুন বা বিদ্যমান অর্ডারে যোগ দিন।'
     },
     {
       number: '২',
@@ -114,7 +154,7 @@ const Home = () => {
     { number: '১৭ কোটি+', label: 'জনসংখ্যা', english: 'Population' },
     { number: '৬৪ জেলা', label: 'জেলার সংখ্যা', english: 'Districts' },
     { number: '৮ টি বিভাগ', label: 'বিভাগের সংখ্যা', english: 'Divisions' },
-    { number: '১৪৭,৫৭০ বর্গ কিমি', label: 'আয়তন', english: 'Area' }
+    { number: '১,৪৭,৫৭০ বর্গ কিমি', label: 'আয়তন', english: 'Area' }
   ];
 
   const popularProducts = [
@@ -128,67 +168,95 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" ref={containerRef}>
-      {/* Hero Section with Bangladesh Theme */}
+      {/* Hero Section with 3D Bangladesh Map */}
       <section className="hero-section relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">
-        {/* Animated Background Elements */}
+        {/* 3D Bangladesh Map Background */}
         <div className="hero-bg absolute inset-0">
-          <motion.div
-            className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360]
-            }}
-            transition={{ 
-              duration: 8, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-20 w-24 h-24 bg-yellow-400/20 rounded-full"
-            animate={{ 
-              y: [0, -20, 0],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{ 
-              duration: 6, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 left-1/4 w-16 h-16 bg-red-500/20 rounded-full"
-            animate={{ 
-              x: [0, 20, 0],
-              scale: [1, 1.5, 1]
-            }}
-            transition={{ 
-              duration: 7, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-          />
+          {/* 3D Map Container */}
+          <div ref={mapRef} className="absolute inset-0 flex items-center justify-center">
+            {/* Bangladesh Map Outline */}
+            <svg 
+              className="w-full h-full opacity-20"
+              viewBox="0 0 400 300"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              {/* Simplified Bangladesh map path */}
+              <path
+                d="M 50 150 Q 100 100 150 120 Q 200 80 250 100 Q 300 60 350 80 Q 380 120 350 150 Q 320 180 280 160 Q 240 140 200 160 Q 160 180 120 160 Q 80 140 50 150 Z"
+                fill="none"
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="2"
+                className="map-outline"
+              />
+              
+              {/* Major cities as dots */}
+              <circle cx="100" cy="120" r="3" fill="rgba(255,255,255,0.5)" />
+              <circle cx="200" cy="160" r="3" fill="rgba(255,255,255,0.5)" />
+              <circle cx="300" cy="80" r="3" fill="rgba(255,255,255,0.5)" />
+              <circle cx="150" cy="200" r="3" fill="rgba(255,255,255,0.5)" />
+            </svg>
+
+            {/* Animated Cart */}
+            <div 
+              ref={cartRef}
+              className="absolute w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg"
+              style={{ transformOrigin: 'center' }}
+            >
+              <ShoppingCart className="w-5 h-5 text-green-800" />
+            </div>
+
+            {/* Floating Elements */}
+            <motion.div
+              className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ 
+                duration: 8, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+            <motion.div
+              className="absolute top-40 right-20 w-24 h-24 bg-yellow-400/20 rounded-full"
+              animate={{ 
+                y: [0, -20, 0],
+                opacity: [0.5, 1, 0.5]
+              }}
+              transition={{ 
+                duration: 6, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 left-1/4 w-16 h-16 bg-red-500/20 rounded-full"
+              animate={{ 
+                x: [0, 20, 0],
+                scale: [1, 1.5, 1]
+              }}
+              transition={{ 
+                duration: 7, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+          </div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            {/* Bangladesh Flag Animation */}
-            <motion.div
-              className="flex justify-center mb-6"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 1, type: "spring", bounce: 0.5 }}
-            >
-              <div className="w-16 h-10 bg-green-500 rounded-t-lg relative">
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-red-500 rounded-full"></div>
-              </div>
-            </motion.div>
-
+            {/* 3D Flipping GroShare Text */}
             <motion.h1 
-              className="hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow"
+              className="groshare-text hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow"
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
+              style={{ 
+                transformStyle: 'preserve-3d',
+                perspective: '1000px'
+              }}
             >
               <span className="text-yellow-400">গ্রো</span>শেয়ার
             </motion.h1>
@@ -280,7 +348,7 @@ const Home = () => {
               কেন গ্রোশেয়ার বেছে নেবেন?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              আমরা গোষ্ঠী ক্রয়কে সহজ, সামাজিক এবং সঞ্চয়-কেন্দ্রিক করে তুলি
+              আমরা দলগত ক্রয়কে সহজ, সামাজিক এবং সঞ্চয়-কেন্দ্রিক করে তুলি
             </p>
           </motion.div>
           
@@ -391,7 +459,7 @@ const Home = () => {
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {popularProducts.map((product, index) => (
               <motion.div
                 key={index}
