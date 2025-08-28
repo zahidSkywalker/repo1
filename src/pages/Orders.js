@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, Plus, ShoppingCart, Users, DollarSign, Clock, MapPin, Star, Heart, TrendingUp } from 'lucide-react';
+import { Search, Filter, Plus, ShoppingCart, Users, DollarSign, Clock, MapPin, Star, Heart, TrendingUp, Eye, Share2 } from 'lucide-react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const Orders = () => {
@@ -11,125 +11,212 @@ const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-  const [filterCategory, setFilterCategory] = useState('all');
+  const [filterCategory, setFilterStatus] = useState('all');
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [viewMode, setViewMode] = useState('grid'); // grid or list
 
-  // Bangladesh-focused mock data
+  // Professional Bangladesh-focused mock data with real images
   useEffect(() => {
     const mockOrders = [
       {
         id: 1,
-        itemName: 'বাসমতি চাল (Basmati Rice)',
+        itemName: 'বাসমতি চাল (Premium Basmati Rice)',
         organizer: 'সাবরিনা আক্তার',
+        organizerAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150',
         totalQuantity: 100,
         currentQuantity: 75,
         minimumThreshold: 50,
         pricePerUnit: 120,
+        retailPrice: 135,
         unit: 'কেজি',
         status: 'active',
         category: 'চাল',
         location: 'ধানমন্ডি, ঢাকা',
         deadline: '2024-01-20',
         participants: 12,
-        image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400',
+        image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500',
         savings: '৳১৫/কেজি',
         rating: 4.8,
-        isPopular: true
+        reviews: 24,
+        isPopular: true,
+        isVerified: true,
+        tags: ['Premium', 'Organic', 'Fresh'],
+        description: 'উচ্চ মানের বাসমতি চাল, পাকিস্তান থেকে আমদানি করা। সুগন্ধি এবং দীর্ঘ দানা।'
       },
       {
         id: 2,
-        itemName: 'মুগ ডাল (Moong Dal)',
+        itemName: 'মুগ ডাল (Organic Moong Dal)',
         organizer: 'রফিক আহমেদ',
+        organizerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
         totalQuantity: 50,
         currentQuantity: 50,
         minimumThreshold: 30,
         pricePerUnit: 180,
+        retailPrice: 205,
         unit: 'কেজি',
         status: 'locked',
         category: 'ডাল',
         location: 'গুলশান, ঢাকা',
         deadline: '2024-01-18',
         participants: 18,
-        image: 'https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=400',
+        image: 'https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=500',
         savings: '৳২৫/কেজি',
         rating: 4.9,
-        isPopular: true
+        reviews: 31,
+        isPopular: true,
+        isVerified: true,
+        tags: ['Organic', 'Fresh', 'High Protein'],
+        description: 'জৈব মুগ ডাল, উচ্চ প্রোটিন সমৃদ্ধ। রান্না করার পর নরম এবং সুস্বাদু।'
       },
       {
         id: 3,
-        itemName: 'আটা (Flour)',
+        itemName: 'আটা (Premium Wheat Flour)',
         organizer: 'ফাতেমা বেগম',
+        organizerAvatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
         totalQuantity: 80,
         currentQuantity: 45,
         minimumThreshold: 60,
         pricePerUnit: 65,
+        retailPrice: 75,
         unit: 'কেজি',
         status: 'active',
         category: 'আটা',
         location: 'মোহাম্মদপুর, ঢাকা',
         deadline: '2024-01-25',
         participants: 8,
-        image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400',
+        image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500',
         savings: '৳১০/কেজি',
         rating: 4.7,
-        isPopular: false
+        reviews: 18,
+        isPopular: false,
+        isVerified: true,
+        tags: ['Premium', 'Fine', 'Fresh'],
+        description: 'উচ্চ মানের গমের আটা, রুটি এবং পরোটা তৈরির জন্য উপযুক্ত।'
       },
       {
         id: 4,
-        itemName: 'চিনি (Sugar)',
+        itemName: 'চিনি (Refined White Sugar)',
         organizer: 'ইমরান হোসেন',
+        organizerAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
         totalQuantity: 60,
         currentQuantity: 60,
         minimumThreshold: 40,
         pricePerUnit: 95,
+        retailPrice: 115,
         unit: 'কেজি',
         status: 'locked',
         category: 'চিনি',
         location: 'বনানী, ঢাকা',
         deadline: '2024-01-15',
         participants: 15,
-        image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=400',
+        image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=500',
         savings: '৳২০/কেজি',
         rating: 4.6,
-        isPopular: false
+        reviews: 22,
+        isPopular: false,
+        isVerified: true,
+        tags: ['Refined', 'Pure', 'White'],
+        description: 'পরিশোধিত সাদা চিনি, চা এবং মিষ্টি তৈরির জন্য আদর্শ।'
       },
       {
         id: 5,
-        itemName: 'তেল (Cooking Oil)',
+        itemName: 'সয়াবিন তেল (Soybean Oil)',
         organizer: 'নাসরিন সুলতানা',
+        organizerAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
         totalQuantity: 40,
         currentQuantity: 25,
         minimumThreshold: 25,
         pricePerUnit: 180,
+        retailPrice: 210,
         unit: 'লিটার',
         status: 'active',
         category: 'তেল',
         location: 'মিরপুর, ঢাকা',
         deadline: '2024-01-30',
         participants: 6,
-        image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=400',
+        image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500',
         savings: '৳৩০/লিটার',
         rating: 4.8,
-        isPopular: true
+        reviews: 19,
+        isPopular: true,
+        isVerified: true,
+        tags: ['Pure', 'Healthy', 'Cooking'],
+        description: 'শতভাগ বিশুদ্ধ সয়াবিন তেল, রান্নার জন্য স্বাস্থ্যকর এবং উপযুক্ত।'
       },
       {
         id: 6,
-        itemName: 'মসলা (Spices)',
+        itemName: 'মসলা সেট (Premium Spice Set)',
         organizer: 'আব্দুল মালেক',
+        organizerAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
         totalQuantity: 30,
         currentQuantity: 30,
         minimumThreshold: 20,
         pricePerUnit: 450,
+        retailPrice: 520,
         unit: 'কেজি',
         status: 'locked',
         category: 'মসলা',
         location: 'লালবাগ, ঢাকা',
         deadline: '2024-01-12',
         participants: 22,
-        image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=400',
-        savings: '৳৫০/কেজি',
+        image: 'https://images.unsplash.com/photo-1601493700631-2aaad15e6d37?w=500',
+        savings: '৳৭০/কেজি',
         rating: 4.9,
-        isPopular: true
+        reviews: 28,
+        isPopular: true,
+        isVerified: true,
+        tags: ['Premium', 'Fresh', 'Authentic'],
+        description: 'প্রিমিয়াম মসলা সেট, হালদার, জিরা, ধনিয়া, এলাচি সহ।'
+      },
+      {
+        id: 7,
+        itemName: 'দুধ (Fresh Cow Milk)',
+        organizer: 'রেহানা খাতুন',
+        organizerAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150',
+        totalQuantity: 25,
+        currentQuantity: 18,
+        minimumThreshold: 20,
+        pricePerUnit: 85,
+        retailPrice: 100,
+        unit: 'লিটার',
+        status: 'active',
+        category: 'দুধ',
+        location: 'উত্তরা, ঢাকা',
+        deadline: '2024-01-28',
+        participants: 9,
+        image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500',
+        savings: '৳১৫/লিটার',
+        rating: 4.7,
+        reviews: 16,
+        isPopular: false,
+        isVerified: true,
+        tags: ['Fresh', 'Pure', 'Daily'],
+        description: 'তাজা গরুর দুধ, প্রতিদিন সকালে সংগ্রহ করা। উচ্চ পুষ্টিগুণ সমৃদ্ধ।'
+      },
+      {
+        id: 8,
+        itemName: 'চা পাতা (Premium Tea Leaves)',
+        organizer: 'মাহমুদ হাসান',
+        organizerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+        totalQuantity: 35,
+        currentQuantity: 35,
+        minimumThreshold: 25,
+        pricePerUnit: 320,
+        retailPrice: 380,
+        unit: 'কেজি',
+        status: 'locked',
+        category: 'চা',
+        location: 'মোহাম্মদপুর, ঢাকা',
+        deadline: '2024-01-10',
+        participants: 14,
+        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500',
+        savings: '৳৬০/কেজি',
+        rating: 4.8,
+        reviews: 25,
+        isPopular: true,
+        isVerified: true,
+        tags: ['Premium', 'Aromatic', 'Fresh'],
+        description: 'উচ্চ মানের চা পাতা, সিলেটের পাহাড় থেকে সংগ্রহ করা। সুগন্ধি এবং স্বাদে ভরপুর।'
       }
     ];
     
@@ -142,7 +229,8 @@ const Orders = () => {
   const filteredOrders = orders.filter(order => {
     const matchesSearch = order.itemName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          order.organizer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         order.location.toLowerCase().includes(searchTerm.toLowerCase());
+                         order.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         order.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || order.status === filterStatus;
     const matchesCategory = filterCategory === 'all' || order.category === filterCategory;
     
@@ -150,27 +238,30 @@ const Orders = () => {
   });
 
   const categories = [
-    { value: 'all', label: 'সব ক্যাটাগরি', english: 'All Categories' },
-    { value: 'চাল', label: 'চাল', english: 'Rice' },
-    { value: 'ডাল', label: 'ডাল', english: 'Lentils' },
-    { value: 'আটা', label: 'আটা', english: 'Flour' },
-    { value: 'চিনি', label: 'চিনি', english: 'Sugar' },
-    { value: 'তেল', label: 'তেল', english: 'Oil' },
-    { value: 'মসলা', label: 'মসলা', english: 'Spices' }
+    { value: 'all', label: 'সব ক্যাটাগরি', english: 'All Categories', count: orders.length },
+    { value: 'চাল', label: 'চাল', english: 'Rice', count: orders.filter(o => o.category === 'চাল').length },
+    { value: 'ডাল', label: 'ডাল', english: 'Lentils', count: orders.filter(o => o.category === 'ডাল').length },
+    { value: 'আটা', label: 'আটা', english: 'Flour', count: orders.filter(o => o.category === 'আটা').length },
+    { value: 'চিনি', label: 'চিনি', english: 'Sugar', count: orders.filter(o => o.category === 'চিনি').length },
+    { value: 'তেল', label: 'তেল', english: 'Oil', count: orders.filter(o => o.category === 'তেল').length },
+    { value: 'মসলা', label: 'মসলা', english: 'Spices', count: orders.filter(o => o.category === 'মসলা').length },
+    { value: 'দুধ', label: 'দুধ', english: 'Milk', count: orders.filter(o => o.category === 'দুধ').length },
+    { value: 'চা', label: 'চা', english: 'Tea', count: orders.filter(o => o.category === 'চা').length }
   ];
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      active: { color: 'bg-green-100 text-green-800', text: 'সক্রিয়', english: 'Active' },
-      locked: { color: 'bg-blue-100 text-blue-800', text: 'লক', english: 'Locked' },
-      completed: { color: 'bg-gray-100 text-gray-800', text: 'সম্পন্ন', english: 'Completed' },
-      cancelled: { color: 'bg-red-100 text-red-800', text: 'বাতিল', english: 'Cancelled' }
+      active: { color: 'bg-green-100 text-green-800 border-green-200', text: 'সক্রিয়', english: 'Active', icon: '🟢' },
+      locked: { color: 'bg-blue-100 text-blue-800 border-blue-200', text: 'লক', english: 'Locked', icon: '🔒' },
+      completed: { color: 'bg-gray-100 text-gray-800 border-gray-200', text: 'সম্পন্ন', english: 'Completed', icon: '✅' },
+      cancelled: { color: 'bg-red-100 text-red-800 border-red-200', text: 'বাতিল', english: 'Cancelled', icon: '❌' }
     };
     
     const config = statusConfig[status] || statusConfig.active;
     return (
       <div className="text-center">
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${config.color}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${config.color}`}>
+          <span className="mr-1">{config.icon}</span>
           {config.text}
         </span>
         <p className="text-xs text-gray-500 mt-1">{config.english}</p>
@@ -258,7 +349,7 @@ const Orders = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -292,16 +383,44 @@ const Orders = () => {
             >
               {categories.map(category => (
                 <option key={category.value} value={category.value}>
-                  {category.label} ({category.english})
+                  {category.label} ({category.english}) - {category.count}
                 </option>
               ))}
             </select>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-md transition-colors ${
+                  viewMode === 'grid' 
+                    ? 'bg-green-100 text-green-600' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded-md transition-colors ${
+                  viewMode === 'list' 
+                    ? 'bg-green-100 text-green-600' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
           </div>
         </motion.div>
 
         {/* Orders Grid with Framer Motion */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -310,18 +429,20 @@ const Orders = () => {
             {filteredOrders.map((order) => (
               <motion.div
                 key={order.id}
-                className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+                className={`bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer ${
+                  viewMode === 'list' ? 'flex' : ''
+                }`}
                 variants={itemVariants}
                 whileHover={{ y: -10, scale: 1.02 }}
                 layout
                 onClick={() => setSelectedOrder(order)}
               >
                 {/* Order Image with Popular Badge */}
-                <div className="relative">
+                <div className={`relative ${viewMode === 'list' ? 'w-48 flex-shrink-0' : ''}`}>
                   <img
                     src={order.image}
                     alt={order.itemName}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className={`${viewMode === 'list' ? 'w-48 h-32' : 'w-full h-48'} object-cover group-hover:scale-110 transition-transform duration-300`}
                   />
                   <div className="absolute top-3 right-3 space-y-2">
                     {getStatusBadge(order.status)}
@@ -329,6 +450,14 @@ const Orders = () => {
                       <div className="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
                         <Star className="w-3 h-3 mr-1" />
                         জনপ্রিয়
+                      </div>
+                    )}
+                    {order.isVerified && (
+                      <div className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                        <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        যাচাইকৃত
                       </div>
                     )}
                   </div>
@@ -340,7 +469,20 @@ const Orders = () => {
                 </div>
 
                 {/* Order Details */}
-                <div className="p-6">
+                <div className={`p-6 ${viewMode === 'list' ? 'flex-1' : ''}`}>
+                  {/* Organizer Info */}
+                  <div className="flex items-center mb-3">
+                    <img
+                      src={order.organizerAvatar}
+                      alt={order.organizer}
+                      className="w-8 h-8 rounded-full mr-3"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{order.organizer}</p>
+                      <p className="text-xs text-gray-500">{order.location}</p>
+                    </div>
+                  </div>
+
                   <div className="flex items-start justify-between mb-3">
                     <h3 className="text-xl font-semibold text-gray-900 group-hover:text-green-600 transition-colors">
                       {order.itemName}
@@ -348,13 +490,23 @@ const Orders = () => {
                     <div className="flex items-center space-x-1">
                       <Star className="w-4 h-4 text-yellow-400 fill-current" />
                       <span className="text-sm font-medium text-gray-600">{order.rating}</span>
+                      <span className="text-xs text-gray-500">({order.reviews})</span>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center text-sm text-gray-500 mb-3">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {order.location}
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {order.tags.map((tag, index) => (
+                      <span key={index} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                    {order.description}
+                  </p>
 
                   {/* Progress Bar */}
                   <div className="mb-4">
@@ -383,6 +535,7 @@ const Orders = () => {
                     <div>
                       <span className="text-gray-500">দাম:</span>
                       <span className="ml-1 font-medium">৳{order.pricePerUnit}/{order.unit}</span>
+                      <span className="ml-2 text-xs text-gray-400 line-through">৳{order.retailPrice}</span>
                     </div>
                     <div>
                       <span className="text-gray-500">শেষ তারিখ:</span>
@@ -416,6 +569,22 @@ const Orders = () => {
                     >
                       বিস্তারিত দেখুন (Details)
                     </motion.button>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                    <button className="flex items-center text-xs text-gray-500 hover:text-green-600 transition-colors">
+                      <Eye className="w-3 h-3 mr-1" />
+                      দেখুন
+                    </button>
+                    <button className="flex items-center text-xs text-gray-500 hover:text-green-600 transition-colors">
+                      <Share2 className="w-3 h-3 mr-1" />
+                      শেয়ার করুন
+                    </button>
+                    <button className="flex items-center text-xs text-gray-500 hover:text-red-600 transition-colors">
+                      <Heart className="w-3 h-3 mr-1" />
+                      পছন্দ
+                    </button>
                   </div>
                 </div>
               </motion.div>
