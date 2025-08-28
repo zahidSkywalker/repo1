@@ -1,60 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-
-// Pages
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import NotFound from './pages/NotFound';
-
-// Components
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
 
 const App = () => {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Navbar />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/404" element={<NotFound />} />
-            <Route path="*" element={<Navigate to="/404" replace />} />
-          </Routes>
-        </main>
-        <Footer />
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-blue-600 mb-4">
+          GroShare
+        </h1>
+        <p className="text-xl text-gray-600 mb-8">
+          Hyperlocal Group-Buy Grocery Application
+        </p>
+        <div className="bg-white p-6 rounded-lg shadow-lg">
+          <p className="text-gray-700">
+            Welcome to GroShare! 🛒
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            Pool orders with neighbors to get wholesale prices
+          </p>
+        </div>
       </div>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-          success: {
-            duration: 3000,
-            iconTheme: {
-              primary: '#22c55e',
-              secondary: '#fff',
-            },
-          },
-          error: {
-            duration: 5000,
-            iconTheme: {
-              primary: '#ef4444',
-              secondary: '#fff',
-            },
-          },
-        }}
-      />
-    </Router>
+    </div>
   );
 };
 
