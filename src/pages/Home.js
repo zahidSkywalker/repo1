@@ -14,6 +14,10 @@ const Home = () => {
   const [isGSAPLoaded, setIsGSAPLoaded] = useState(false);
   const [language, setLanguage] = useState('bangla'); // 'bangla' or 'english'
 
+  // Banner image from env (public Cloudinary secure URL expected)
+  const bannerImage = (process.env.REACT_APP_BANNER_IMAGE || '').trim() ||
+    'https://images.unsplash.com/photo-1604908177522-04090f2e9b36?auto=format&fit=crop&w=1600&q=60';
+
   // Language content
   const content = {
     bangla: {
@@ -373,6 +377,13 @@ const Home = () => {
 
       {/* Hero Section with Enhanced 3D Bangladesh Map */}
       <section className="hero-section relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">
+        {/* Banner background image layer */}
+        <div
+          className="absolute inset-0 bg-center bg-cover opacity-20"
+          style={{ backgroundImage: `url('${bannerImage}')` }}
+          aria-hidden="true"
+        />
+
         {/* Enhanced 3D Bangladesh Map Background */}
         <div className="hero-bg absolute inset-0">
           {/* 3D Map Container */}
