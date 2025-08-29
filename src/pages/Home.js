@@ -41,9 +41,9 @@ const Home = () => {
       { y: 0, opacity: 1, duration: 1 }, "-=0.5"
     );
 
-    // 3D Bangladesh Map Animation
+    // Enhanced 3D Bangladesh Map Animation with Advanced Cart Animation
     if (mapRef.current && cartRef.current) {
-      // Create the 3D map path
+      // Create the 3D map path with more complex curves
       const mapPath = [
         { x: 0, y: 0 },
         { x: 50, y: -20 },
@@ -57,22 +57,40 @@ const Home = () => {
         { x: 450, y: 15 }
       ];
 
-      // Animate cart along the map path
+      // Main cart animation along the map path
       gsap.to(cartRef.current, {
-        duration: 8,
+        duration: 12,
         ease: "none",
         repeat: -1,
         motionPath: {
           path: mapPath,
-          curviness: 0.5,
+          curviness: 0.8,
           autoRotate: true
         }
       });
 
-      // Animate GroShare text flipping
-      gsap.to(".groshare-text", {
+      // Enhanced cart bouncing and floating effects
+      gsap.to(cartRef.current, {
+        y: -10,
+        duration: 1.5,
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Cart rotation and scale effects
+      gsap.to(cartRef.current, {
+        rotation: 360,
+        scale: [1, 1.1, 1],
+        duration: 4,
+        ease: "power2.inOut",
+        repeat: -1
+      });
+
+      // Cart shadow animation for depth
+      gsap.to(cartRef.current, {
+        boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
         duration: 2,
-        rotationY: 360,
         ease: "power2.inOut",
         repeat: -1,
         yoyo: true
@@ -88,6 +106,28 @@ const Home = () => {
           end: "bottom top",
           scrub: true
         }
+      });
+
+      // Animate map outline with drawing effect
+      gsap.fromTo(".map-outline", {
+        strokeDasharray: "1000",
+        strokeDashoffset: "1000"
+      }, {
+        strokeDashoffset: 0,
+        duration: 3,
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Animate city dots with pulsing effect
+      gsap.to("circle", {
+        scale: [1, 1.5, 1],
+        opacity: [0.5, 1, 0.5],
+        duration: 2,
+        ease: "power2.inOut",
+        repeat: -1,
+        stagger: 0.5
       });
     }
 
@@ -168,49 +208,91 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" ref={containerRef}>
-      {/* Hero Section with 3D Bangladesh Map */}
+      {/* Hero Section with Enhanced 3D Bangladesh Map */}
       <section className="hero-section relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">
-        {/* 3D Bangladesh Map Background */}
+        {/* Enhanced 3D Bangladesh Map Background */}
         <div className="hero-bg absolute inset-0">
           {/* 3D Map Container */}
           <div ref={mapRef} className="absolute inset-0 flex items-center justify-center">
-            {/* Bangladesh Map Outline */}
+            {/* Enhanced Bangladesh Map Outline */}
             <svg 
               className="w-full h-full opacity-20"
               viewBox="0 0 400 300"
               preserveAspectRatio="xMidYMid meet"
             >
-              {/* Simplified Bangladesh map path */}
+              {/* Enhanced Bangladesh map path with more detail */}
               <path
                 d="M 50 150 Q 100 100 150 120 Q 200 80 250 100 Q 300 60 350 80 Q 380 120 350 150 Q 320 180 280 160 Q 240 140 200 160 Q 160 180 120 160 Q 80 140 50 150 Z"
                 fill="none"
-                stroke="rgba(255,255,255,0.3)"
-                strokeWidth="2"
+                stroke="rgba(255,255,255,0.4)"
+                strokeWidth="3"
                 className="map-outline"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               
-              {/* Major cities as dots */}
-              <circle cx="100" cy="120" r="3" fill="rgba(255,255,255,0.5)" />
-              <circle cx="200" cy="160" r="3" fill="rgba(255,255,255,0.5)" />
-              <circle cx="300" cy="80" r="3" fill="rgba(255,255,255,0.5)" />
-              <circle cx="150" cy="200" r="3" fill="rgba(255,255,255,0.5)" />
+              {/* Major cities as animated dots */}
+              <circle cx="100" cy="120" r="4" fill="rgba(255,255,255,0.7)" className="city-dot" />
+              <circle cx="200" cy="160" r="4" fill="rgba(255,255,255,0.7)" className="city-dot" />
+              <circle cx="300" cy="80" r="4" fill="rgba(255,255,255,0.7)" className="city-dot" />
+              <circle cx="150" cy="200" r="4" fill="rgba(255,255,255,0.7)" className="city-dot" />
+              
+              {/* Additional map details */}
+              <path
+                d="M 120 140 Q 140 130 160 140"
+                fill="none"
+                stroke="rgba(255,255,255,0.2)"
+                strokeWidth="1"
+                strokeDasharray="5,5"
+              />
+              <path
+                d="M 220 120 Q 240 110 260 120"
+                fill="none"
+                stroke="rgba(255,255,255,0.2)"
+                strokeWidth="1"
+                strokeDasharray="5,5"
+              />
             </svg>
 
-            {/* Animated Cart */}
+            {/* Enhanced Animated Cart with Multiple Effects */}
             <div 
               ref={cartRef}
-              className="absolute w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg"
-              style={{ transformOrigin: 'center' }}
+              className="absolute w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-2xl"
+              style={{ 
+                transformOrigin: 'center',
+                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))'
+              }}
             >
-              <ShoppingCart className="w-5 h-5 text-green-800" />
+              <ShoppingCart className="w-6 h-6 text-green-800" />
+              
+              {/* Cart glow effect */}
+              <div className="absolute inset-0 bg-yellow-300 rounded-full opacity-0 animate-ping"></div>
+              
+              {/* Cart trail effect */}
+              <div className="absolute -top-2 -left-2 w-4 h-4 bg-yellow-200 rounded-full opacity-60 animate-pulse"></div>
+              <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-yellow-200 rounded-full opacity-40 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
             </div>
 
-            {/* Floating Elements */}
+            {/* Enhanced Floating Elements with Better Animation */}
             <motion.div
-              className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full"
+              className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full backdrop-blur-sm"
               animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360]
+                scale: [1, 1.3, 1],
+                rotate: [0, 180, 360],
+                opacity: [0.3, 0.7, 0.3]
+              }}
+              transition={{ 
+                duration: 10, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+            <motion.div
+              className="absolute top-40 right-20 w-24 h-24 bg-yellow-400/20 rounded-full backdrop-blur-sm"
+              animate={{ 
+                y: [0, -30, 0],
+                opacity: [0.4, 1, 0.4],
+                scale: [1, 1.2, 1]
               }}
               transition={{ 
                 duration: 8, 
@@ -219,25 +301,42 @@ const Home = () => {
               }}
             />
             <motion.div
-              className="absolute top-40 right-20 w-24 h-24 bg-yellow-400/20 rounded-full"
+              className="absolute bottom-20 left-1/4 w-16 h-16 bg-red-500/20 rounded-full backdrop-blur-sm"
               animate={{ 
-                y: [0, -20, 0],
-                opacity: [0.5, 1, 0.5]
+                x: [0, 25, 0],
+                scale: [1, 1.6, 1],
+                rotate: [0, 90, 180]
               }}
               transition={{ 
-                duration: 6, 
+                duration: 12, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            />
+            
+            {/* New floating elements for more dynamic feel */}
+            <motion.div
+              className="absolute top-1/2 right-1/3 w-20 h-20 bg-blue-400/15 rounded-full backdrop-blur-sm"
+              animate={{ 
+                y: [0, -20, 0],
+                x: [0, 15, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 9, 
                 repeat: Infinity, 
                 ease: "easeInOut" 
               }}
             />
             <motion.div
-              className="absolute bottom-20 left-1/4 w-16 h-16 bg-red-500/20 rounded-full"
+              className="absolute bottom-1/3 left-1/2 w-28 h-28 bg-green-400/10 rounded-full backdrop-blur-sm"
               animate={{ 
-                x: [0, 20, 0],
-                scale: [1, 1.5, 1]
+                scale: [1, 1.4, 1],
+                opacity: [0.2, 0.6, 0.2],
+                rotate: [0, -180, -360]
               }}
               transition={{ 
-                duration: 7, 
+                duration: 15, 
                 repeat: Infinity, 
                 ease: "easeInOut" 
               }}
@@ -247,16 +346,12 @@ const Home = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            {/* 3D Flipping GroShare Text */}
+            {/* Static GroShare Title (No More Rotation) */}
             <motion.h1 
-              className="groshare-text hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow"
+              className="hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow"
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
-              style={{ 
-                transformStyle: 'preserve-3d',
-                perspective: '1000px'
-              }}
             >
               <span className="text-yellow-400">গ্রো</span>শেয়ার
             </motion.h1>
@@ -318,17 +413,21 @@ const Home = () => {
               )}
             </motion.div>
 
-            {/* Bangladesh Map Icon */}
+            {/* Bangladesh Map Icon with Enhanced Animation */}
             <motion.div
               className="mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1 }}
             >
-              <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+              <motion.div 
+                className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full"
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.2)' }}
+                transition={{ duration: 0.3 }}
+              >
                 <MapPin className="w-5 h-5 text-yellow-400" />
                 <span className="text-sm">বাংলাদেশের সব জেলায় সেবা</span>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -463,13 +562,15 @@ const Home = () => {
             {popularProducts.map((product, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-lg shadow-lg overflow-hidden group"
+                className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+                variants={itemVariants}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -10, scale: 1.02 }}
               >
+                {/* Order Image with Popular Badge */}
                 <div className="relative overflow-hidden">
                   <img
                     src={product.image}
