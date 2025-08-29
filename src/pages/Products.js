@@ -33,11 +33,15 @@ const Products = () => {
         const params = new URLSearchParams();
         if (category && category !== 'All') params.append('category', category);
         if (search) params.append('name', search);
-        const base = API_CONFIG.API_BASE_URL.endsWith('/')</n+          ? API_CONFIG.API_BASE_URL.slice(0, -1)
+        const base = (API_CONFIG.API_BASE_URL || '').endsWith('/')
+          ? API_CONFIG.API_BASE_URL.slice(0, -1)
           : API_CONFIG.API_BASE_URL;
         const url = `${base}/products${params.toString() ? `?${params.toString()}` : ''}`;
-        const res = await fetch(url);
+        const res = await fetch(url, { headers: { Accept: 'application/json' } });
         const data = await handleApiResponse(res);
+        if (!data || !Array.isArray(data.products)) {
+          throw new Error('Unexpected API response');
+        }
         setProducts(Array.isArray(data.products) ? data.products : []);
       } catch (err) {
         const e = handleApiError(err);

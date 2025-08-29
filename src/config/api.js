@@ -81,11 +81,35 @@ export const getHeaders = () => ({
 
 // API Response Handler
 export const handleApiResponse = async (response) => {
+  // Handle non-2xx
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    let message = `HTTP error! status: ${response.status}`;
+    try {
+      const ct = response.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        const errorData = await response.json();
+        message = errorData?.error || errorData?.message || message;
+      } else {
+        const text = await response.text();
+        message = text || message;
+      }
+    } catch (_) {}
+    throw new Error(message);
   }
-  return response.json();
+
+  // Try JSON first
+  try {
+    return await response.json();
+  } catch (_) {
+    // Fallback to text
+    const text = await response.text();
+    // Attempt to parse if it's JSON-like
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { raw: text };
+    }
+  }
 };
 
 // API Error Handler
