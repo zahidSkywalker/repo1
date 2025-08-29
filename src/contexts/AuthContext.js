@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_CONFIG } from '../config/api';
 
 const AuthContext = createContext();
 
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get('/api/auth/me');
+      const response = await axios.get(`${API_CONFIG.API_BASE_URL}/auth/me`);
       setUser(response.data);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await axios.post(`${API_CONFIG.API_BASE_URL}/auth/login`, { email, password });
       const { token: newToken, user: userData } = response.data;
       
       localStorage.setItem('token', newToken);
@@ -58,19 +59,20 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('/api/auth/register', userData);
+      const response = await axios.post(`${API_CONFIG.API_BASE_URL}/auth/register`, userData);
       const { token: newToken, user: newUser } = response.data;
       
       localStorage.setItem('token', newToken);
-      setToken(newToken);
       setUser(newUser);
+      setToken(newToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
       return { success: true };
     } catch (error) {
+      console.error('Registration error:', error.response || error);
       return { 
         success: false, 
-        error: error.response?.data?.message || 'Registration failed' 
+        error: error.response?.data?.message || error.message || 'Registration failed' 
       };
     }
   };
@@ -84,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (profileData) => {
     try {
-      const response = await axios.put('/api/auth/profile', profileData);
+      const response = await axios.put(`${API_CONFIG.API_BASE_URL}/auth/profile`, profileData);
       setUser(response.data);
       return { success: true };
     } catch (error) {
@@ -97,7 +99,7 @@ export const AuthProvider = ({ children }) => {
 
   const changePassword = async (currentPassword, newPassword) => {
     try {
-      await axios.put('/api/auth/change-password', { currentPassword, newPassword });
+      await axios.put(`${API_CONFIG.API_BASE_URL}/auth/change-password`, { currentPassword, newPassword });
       return { success: true };
     } catch (error) {
       return { 
@@ -109,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 
   const updatePreferences = async (preferences) => {
     try {
-      const response = await axios.put('/api/users/preferences', preferences);
+      const response = await axios.put(`${API_CONFIG.API_BASE_URL}/users/preferences`, preferences);
       setUser(prev => ({ ...prev, preferences: response.data.preferences }));
       return { success: true };
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { motion } from 'framer-motion';
 import { Eye, EyeOff, User, Mail, Phone, MapPin, Lock } from 'lucide-react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
@@ -86,11 +87,15 @@ const Register = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m6 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-            </svg>
-          </div>
+          <motion.img
+            src={process.env.REACT_APP_LOGO_URL || 'https://res.cloudinary.com/dbi2rwlso/image/upload/v1756474306/532F6958-41F8-42A3-A67D-41F57A313D45_u81tke.png'}
+            alt="GroShare Logo"
+            className="w-12 h-12 object-contain drop-shadow"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 12 }}
+            whileHover={{ scale: 1.05 }}
+          />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Create your account
