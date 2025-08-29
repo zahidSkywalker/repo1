@@ -16,7 +16,7 @@ const Home = () => {
 
   // Banner image from env (public Cloudinary secure URL expected)
   const bannerImage = (process.env.REACT_APP_BANNER_IMAGE || '').trim() ||
-    'https://images.unsplash.com/photo-1604908177522-04090f2e9b36?auto=format&fit=crop&w=1600&q=60';
+    'https://res.cloudinary.com/dbi2rwlso/image/upload/v1756474306/IMG_9110_dgb84e.jpg';
 
   // Language content
   const content = {

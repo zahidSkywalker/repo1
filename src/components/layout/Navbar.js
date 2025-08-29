@@ -24,9 +24,11 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <ShoppingCart className="w-5 h-5 text-white" />
-            </div>
+            <img
+              src={process.env.REACT_APP_LOGO_URL || 'https://res.cloudinary.com/dbi2rwlso/image/upload/v1756474306/532F6958-41F8-42A3-A67D-41F57A313D45_u81tke.png'}
+              alt="GroShare Logo"
+              className="w-9 h-9 object-contain"
+            />
             <span className="text-xl font-bold text-gray-900">GroShare</span>
           </Link>
 
