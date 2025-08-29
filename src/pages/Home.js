@@ -1,13 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ShoppingCart, Users, DollarSign, Truck, CheckCircle, Star, MapPin, Clock, Heart } from 'lucide-react';
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const { user } = useAuth();
@@ -16,123 +11,137 @@ const Home = () => {
   const cartRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const isInView = useInView(containerRef, { once: true });
+  const [isGSAPLoaded, setIsGSAPLoaded] = useState(false);
 
-  // GSAP Animations
+  // GSAP Animations with error handling
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top center",
-        end: "bottom center",
-        scrub: 1
+    let gsap = null;
+    let ScrollTrigger = null;
+
+    // Dynamically import GSAP to prevent errors
+    const loadGSAP = async () => {
+      try {
+        const gsapModule = await import('gsap');
+        const ScrollTriggerModule = await import('gsap/ScrollTrigger');
+        
+        gsap = gsapModule.default;
+        ScrollTrigger = ScrollTriggerModule.default;
+        
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger);
+        setIsGSAPLoaded(true);
+        
+        // Start animations
+        startAnimations(gsap, ScrollTrigger);
+      } catch (error) {
+        console.warn('GSAP failed to load, using fallback animations:', error);
+        setIsGSAPLoaded(false);
       }
-    });
+    };
 
-    tl.fromTo(".hero-title", 
-      { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1 }
-    )
-    .fromTo(".hero-subtitle", 
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1 }, "-=0.5"
-    )
-    .fromTo(".hero-buttons", 
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1 }, "-=0.5"
-    );
+    const startAnimations = (gsap, ScrollTrigger) => {
+      if (!gsap || !mapRef.current || !cartRef.current) return;
 
-    // Enhanced 3D Bangladesh Map Animation with Advanced Cart Animation
-    if (mapRef.current && cartRef.current) {
-      // Create the 3D map path with more complex curves
-      const mapPath = [
-        { x: 0, y: 0 },
-        { x: 50, y: -20 },
-        { x: 100, y: 10 },
-        { x: 150, y: -30 },
-        { x: 200, y: 20 },
-        { x: 250, y: -10 },
-        { x: 300, y: 40 },
-        { x: 350, y: 0 },
-        { x: 400, y: -25 },
-        { x: 450, y: 15 }
-      ];
+      try {
+        // Create the 3D map path with more complex curves
+        const mapPath = [
+          { x: 0, y: 0 },
+          { x: 50, y: -20 },
+          { x: 100, y: 10 },
+          { x: 150, y: -30 },
+          { x: 200, y: 20 },
+          { x: 250, y: -10 },
+          { x: 300, y: 40 },
+          { x: 350, y: 0 },
+          { x: 400, y: -25 },
+          { x: 450, y: 15 }
+        ];
 
-      // Main cart animation along the map path
-      gsap.to(cartRef.current, {
-        duration: 12,
-        ease: "none",
-        repeat: -1,
-        motionPath: {
-          path: mapPath,
-          curviness: 0.8,
-          autoRotate: true
-        }
-      });
+        // Main cart animation along the map path
+        gsap.to(cartRef.current, {
+          duration: 12,
+          ease: "none",
+          repeat: -1,
+          motionPath: {
+            path: mapPath,
+            curviness: 0.8,
+            autoRotate: true
+          }
+        });
 
-      // Enhanced cart bouncing and floating effects
-      gsap.to(cartRef.current, {
-        y: -10,
-        duration: 1.5,
-        ease: "power2.inOut",
-        repeat: -1,
-        yoyo: true
-      });
+        // Enhanced cart bouncing and floating effects
+        gsap.to(cartRef.current, {
+          y: -10,
+          duration: 1.5,
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true
+        });
 
-      // Cart rotation and scale effects
-      gsap.to(cartRef.current, {
-        rotation: 360,
-        scale: [1, 1.1, 1],
-        duration: 4,
-        ease: "power2.inOut",
-        repeat: -1
-      });
+        // Cart rotation and scale effects
+        gsap.to(cartRef.current, {
+          rotation: 360,
+          scale: [1, 1.1, 1],
+          duration: 4,
+          ease: "power2.inOut",
+          repeat: -1
+        });
 
-      // Cart shadow animation for depth
-      gsap.to(cartRef.current, {
-        boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-        duration: 2,
-        ease: "power2.inOut",
-        repeat: -1,
-        yoyo: true
-      });
+        // Cart shadow animation for depth
+        gsap.to(cartRef.current, {
+          boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+          duration: 2,
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true
+        });
 
-      // Parallax effect for hero background
-      gsap.to(".hero-bg", {
-        yPercent: -50,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero-section",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      });
+        // Parallax effect for hero background
+        gsap.to(".hero-bg", {
+          yPercent: -50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-section",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        });
 
-      // Animate map outline with drawing effect
-      gsap.fromTo(".map-outline", {
-        strokeDasharray: "1000",
-        strokeDashoffset: "1000"
-      }, {
-        strokeDashoffset: 0,
-        duration: 3,
-        ease: "power2.inOut",
-        repeat: -1,
-        yoyo: true
-      });
+        // Animate map outline with drawing effect
+        gsap.fromTo(".map-outline", {
+          strokeDasharray: "1000",
+          strokeDashoffset: "1000"
+        }, {
+          strokeDashoffset: 0,
+          duration: 3,
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true
+        });
 
-      // Animate city dots with pulsing effect
-      gsap.to("circle", {
-        scale: [1, 1.5, 1],
-        opacity: [0.5, 1, 0.5],
-        duration: 2,
-        ease: "power2.inOut",
-        repeat: -1,
-        stagger: 0.5
-      });
-    }
+        // Animate city dots with pulsing effect
+        gsap.to("circle", {
+          scale: [1, 1.5, 1],
+          opacity: [0.5, 1, 0.5],
+          duration: 2,
+          ease: "power2.inOut",
+          repeat: -1,
+          stagger: 0.5
+        });
+
+      } catch (error) {
+        console.warn('GSAP animation failed:', error);
+      }
+    };
+
+    loadGSAP();
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      // Cleanup GSAP animations
+      if (gsap && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      }
     };
   }, []);
 
@@ -563,7 +572,6 @@ const Home = () => {
               <motion.div
                 key={index}
                 className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
-                variants={itemVariants}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
