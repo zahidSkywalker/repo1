@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { ShoppingCart, Users, DollarSign, Truck, CheckCircle, Star, MapPin, Clock, Heart } from 'lucide-react';
+import { ShoppingCart, Users, DollarSign, Truck, CheckCircle, Star, MapPin, Clock, Heart, Globe, ArrowRight } from 'lucide-react';
 
 const Home = () => {
   const { user } = useAuth();
@@ -12,6 +12,177 @@ const Home = () => {
   const { scrollYProgress } = useScroll();
   const isInView = useInView(containerRef, { once: true });
   const [isGSAPLoaded, setIsGSAPLoaded] = useState(false);
+  const [language, setLanguage] = useState('bangla'); // 'bangla' or 'english'
+
+  // Language content
+  const content = {
+    bangla: {
+      hero: {
+        title: 'গ্রোশেয়ার',
+        subtitle: 'আপনার প্রতিবেশীদের সাথে মিলে পাইকারি দামে খাবার কিনুন।',
+        tagline: 'একসাথে থাকি, একসাথে সঞ্চয় করি।',
+        serviceText: 'বাংলাদেশের সব জেলায় সেবা',
+        startButton: 'শুরু করুন',
+        loginButton: 'সাইন ইন করুন',
+        dashboardButton: 'নতুন অর্ডার তৈরি করুন'
+      },
+      features: {
+        title: 'কেন গ্রোশেয়ার বেছে নেবেন?',
+        subtitle: 'আমরা দলগত ক্রয়কে সহজ, সামাজিক এবং সঞ্চয়-কেন্দ্রিক করে তুলি',
+        groupBuying: {
+          title: 'দলগত ক্রয়',
+          subtitle: 'Group Buying',
+          description: 'আপনার প্রতিবেশীদের সাথে মিলে পাইকারি দামে কেনাকাটা করুন।'
+        },
+        community: {
+          title: 'সম্প্রদায় গঠন',
+          subtitle: 'Build Community',
+          description: 'প্রতিবেশীদের সাথে সম্পর্ক গড়ে তুলুন এবং স্থানীয় সম্প্রদায় শক্তিশালী করুন।'
+        },
+        savings: {
+          title: 'টাকা সঞ্চয়',
+          subtitle: 'Save Money',
+          description: 'দলগত ক্রয়ের মাধ্যমে পাইকারি দামে খাবার কিনুন এবং অর্থ সঞ্চয় করুন।'
+        },
+        delivery: {
+          title: 'সুবিধাজনক ডেলিভারি',
+          subtitle: 'Convenient Delivery',
+          description: 'সবাইয়ের জন্য উপযুক্ত সময়ে ডেলিভারি ব্যবস্থা করুন।'
+        }
+      },
+      howItWorks: {
+        title: 'কিভাবে কাজ করে',
+        subtitle: 'আপনার প্রতিবেশীদের সাথে অর্থ সঞ্চয় করার সহজ ধাপগুলি',
+        step1: {
+          number: '১',
+          title: 'সৃষ্টি করুন বা যোগ দিন',
+          subtitle: 'Create or Join',
+          description: 'আপনার এলাকায় নতুন দলগত অর্ডার শুরু করুন বা বিদ্যমান অর্ডারে যোগ দিন।'
+        },
+        step2: {
+          number: '২',
+          title: 'সীমা অতিক্রম করুন',
+          subtitle: 'Reach Threshold',
+          description: 'পাইকারি দামের জন্য প্রয়োজনীয় ন্যূনতম পরিমাণে পৌঁছানোর জন্য একসাথে কাজ করুন।'
+        },
+        step3: {
+          number: '৩',
+          title: 'অর্ডার করুন এবং অর্থ প্রদান করুন',
+          subtitle: 'Order & Pay',
+          description: 'সীমা পূরণ হলে অর্ডার লক হয়ে যায় এবং অর্থ প্রদান প্রক্রিয়া শুরু হয়।'
+        },
+        step4: {
+          number: '৪',
+          title: 'সঞ্চয় উপভোগ করুন',
+          subtitle: 'Enjoy Savings',
+          description: 'সম্মত সময়ে আপনার খাবার তুলে নিন এবং আপনার সঞ্চয় উপভোগ করুন!'
+        }
+      },
+      products: {
+        title: 'জনপ্রিয় পণ্যসমূহ',
+        subtitle: 'বাংলাদেশের মানুষের প্রিয় খাবার পাইকারি দামে',
+        orderButton: 'অর্ডার করুন'
+      },
+      aboutUs: {
+        title: 'আমাদের সম্পর্কে',
+        subtitle: 'Who We Are',
+        paragraph1: 'গ্রোশেয়ার হল বাংলাদেশের প্রথম হাইপারলোকাল দলগত ক্রয় প্ল্যাটফর্ম যা প্রতিবেশীদের মধ্যে অর্থনৈতিক সহযোগিতা গড়ে তোলে। আমরা বিশ্বাস করি যে একসাথে কাজ করলে সবাই উপকৃত হয়।',
+        paragraph2: 'আমাদের মিশন হল স্থানীয় সম্প্রদায়কে শক্তিশালী করা, অর্থ সঞ্চয় সহজ করা এবং টেকসই ভোক্তা আচরণ উৎসাহিত করা। প্রতিটি অর্ডারের মাধ্যমে আমরা নতুন বন্ধুত্ব তৈরি করি এবং আমাদের সম্প্রদায়কে আরও ঘনিষ্ঠ করি।',
+        paragraph3: 'আমরা শুধু একটি অ্যাপ নই - আমরা একটি আন্দোলন। প্রতিদিন হাজার হাজার পরিবার আমাদের মাধ্যমে অর্থ সঞ্চয় করছে এবং তাদের প্রতিবেশীদের সাথে সম্পর্ক গড়ে তুলছে।',
+        tagline: 'গ্রোশেয়ার – একসাথে এগিয়ে চলার নাম।'
+      },
+      cta: {
+        title: 'অর্থ সঞ্চয় শুরু করার জন্য প্রস্তুত?',
+        subtitle: 'হাজার হাজার প্রতিবেশীদের সাথে যোগ দিন যারা ইতিমধ্যে অর্থ সঞ্চয় করছে এবং সম্প্রদায় গড়ে তুলছে',
+        dashboardButton: 'ড্যাশবোর্ডে যান',
+        startButton: 'আজই শুরু করুন'
+      }
+    },
+    english: {
+      hero: {
+        title: 'GroShare',
+        subtitle: 'Pool grocery orders with neighbors to get wholesale prices.',
+        tagline: 'Together we stay, together we save.',
+        serviceText: 'Service available in all districts of Bangladesh',
+        startButton: 'Get Started',
+        loginButton: 'Sign In',
+        dashboardButton: 'Create New Order'
+      },
+      features: {
+        title: 'Why Choose GroShare?',
+        subtitle: 'We make group buying simple, social, and savings-focused',
+        groupBuying: {
+          title: 'Group Buying',
+          subtitle: 'Group Buying',
+          description: 'Shop at wholesale prices with your neighbors.'
+        },
+        community: {
+          title: 'Build Community',
+          subtitle: 'Build Community',
+          description: 'Build relationships with neighbors and strengthen local community.'
+        },
+        savings: {
+          title: 'Save Money',
+          subtitle: 'Save Money',
+          description: 'Buy groceries at wholesale prices through group buying and save money.'
+        },
+        delivery: {
+          title: 'Convenient Delivery',
+          subtitle: 'Convenient Delivery',
+          description: 'Arrange delivery at convenient times for everyone.'
+        }
+      },
+      howItWorks: {
+        title: 'How It Works',
+        subtitle: 'Simple steps to save money with your neighbors',
+        step1: {
+          number: '1',
+          title: 'Create or Join',
+          subtitle: 'Create or Join',
+          description: 'Start a new group order in your area or join existing orders.'
+        },
+        step2: {
+          number: '2',
+          title: 'Reach Threshold',
+          subtitle: 'Reach Threshold',
+          description: 'Work together to reach the minimum quantity needed for wholesale prices.'
+        },
+        step3: {
+          number: '3',
+          title: 'Order & Pay',
+          subtitle: 'Order & Pay',
+          description: 'Once threshold is met, order locks and payment process begins.'
+        },
+        step4: {
+          number: '4',
+          title: 'Enjoy Savings',
+          subtitle: 'Enjoy Savings',
+          description: 'Pick up your groceries at the agreed time and enjoy your savings!'
+        }
+      },
+      products: {
+        title: 'Popular Products',
+        subtitle: 'Bangladesh\'s favorite foods at wholesale prices',
+        orderButton: 'Order Now'
+      },
+      aboutUs: {
+        title: 'About Us',
+        subtitle: 'Who We Are',
+        paragraph1: 'GroShare is Bangladesh\'s first hyperlocal group buying platform that creates economic cooperation among neighbors. We believe that when we work together, everyone benefits.',
+        paragraph2: 'Our mission is to strengthen local communities, make saving money easier, and encourage sustainable consumer behavior. Through each order, we create new friendships and bring our communities closer.',
+        paragraph3: 'We are not just an app - we are a movement. Every day, thousands of families are saving money and building relationships with their neighbors through our platform.',
+        tagline: 'GroShare – The name of moving forward together.'
+      },
+      cta: {
+        title: 'Ready to start saving money?',
+        subtitle: 'Join thousands of neighbors who are already saving money and building community',
+        dashboardButton: 'Go to Dashboard',
+        startButton: 'Start Today'
+      }
+    }
+  };
+
+  const currentContent = content[language];
 
   // GSAP Animations with error handling
   useEffect(() => {
@@ -78,16 +249,7 @@ const Home = () => {
           yoyo: true
         });
 
-        // Cart rotation and scale effects
-        gsap.to(cartRef.current, {
-          rotation: 360,
-          scale: [1, 1.1, 1],
-          duration: 4,
-          ease: "power2.inOut",
-          repeat: -1
-        });
-
-        // Cart shadow animation for depth
+        // Cart shadow animation for depth (removed rotation)
         gsap.to(cartRef.current, {
           boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
           duration: 2,
@@ -148,75 +310,67 @@ const Home = () => {
   const features = [
     {
       icon: <ShoppingCart className="w-8 h-8" />,
-      title: 'দলগত ক্রয়',
-      subtitle: 'Group Buying',
-      description: 'আপনার প্রতিবেশীদের সাথে মিলে পাইকারি দামে কেনাকাটা করুন।'
+      ...currentContent.features.groupBuying
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: 'সম্প্রদায় গঠন',
-      subtitle: 'Build Community',
-      description: 'প্রতিবেশীদের সাথে সম্পর্ক গড়ে তুলুন এবং স্থানীয় সম্প্রদায় শক্তিশালী করুন।'
+      ...currentContent.features.community
     },
     {
       icon: <DollarSign className="w-8 h-8" />,
-      title: 'টাকা সঞ্চয়',
-      subtitle: 'Save Money',
-      description: 'দলগত ক্রয়ের মাধ্যমে পাইকারি দামে খাবার কিনুন এবং অর্থ সঞ্চয় করুন।'
+      ...currentContent.features.savings
     },
     {
       icon: <Truck className="w-8 h-8" />,
-      title: 'সুবিধাজনক ডেলিভারি',
-      subtitle: 'Convenient Delivery',
-      description: 'সবাইয়ের জন্য উপযুক্ত সময়ে ডেলিভারি ব্যবস্থা করুন।'
+      ...currentContent.features.delivery
     }
   ];
 
   const steps = [
     {
-      number: '১',
-      title: 'সৃষ্টি করুন বা যোগ দিন',
-      subtitle: 'Create or Join',
-      description: 'আপনার এলাকায় নতুন দলগত অর্ডার শুরু করুন বা বিদ্যমান অর্ডারে যোগ দিন।'
+      number: language === 'bangla' ? '১' : '1',
+      ...currentContent.howItWorks.step1
     },
     {
-      number: '২',
-      title: 'সীমা অতিক্রম করুন',
-      subtitle: 'Reach Threshold',
-      description: 'পাইকারি দামের জন্য প্রয়োজনীয় ন্যূনতম পরিমাণে পৌঁছানোর জন্য একসাথে কাজ করুন।'
+      number: language === 'bangla' ? '২' : '2',
+      ...currentContent.howItWorks.step2
     },
     {
-      number: '৩',
-      title: 'অর্ডার করুন এবং অর্থ প্রদান করুন',
-      subtitle: 'Order & Pay',
-      description: 'সীমা পূরণ হলে অর্ডার লক হয়ে যায় এবং অর্থ প্রদান প্রক্রিয়া শুরু হয়।'
+      number: language === 'bangla' ? '৩' : '3',
+      ...currentContent.howItWorks.step3
     },
     {
-      number: '৪',
-      title: 'সঞ্চয় উপভোগ করুন',
-      subtitle: 'Enjoy Savings',
-      description: 'সম্মত সময়ে আপনার খাবার তুলে নিন এবং আপনার সঞ্চয় উপভোগ করুন!'
+      number: language === 'bangla' ? '৪' : '4',
+      ...currentContent.howItWorks.step4
     }
   ];
 
-  const bangladeshStats = [
-    { number: '১৭ কোটি+', label: 'জনসংখ্যা', english: 'Population' },
-    { number: '৬৪ জেলা', label: 'জেলার সংখ্যা', english: 'Districts' },
-    { number: '৮ টি বিভাগ', label: 'বিভাগের সংখ্যা', english: 'Divisions' },
-    { number: '১,৪৭,৫৭০ বর্গ কিমি', label: 'আয়তন', english: 'Area' }
-  ];
-
   const popularProducts = [
-    { name: 'চাল (Rice)', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400', price: '৳৬৫/কেজি' },
-    { name: 'ডাল (Lentils)', image: 'https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=400', price: '৳১২০/কেজি' },
-    { name: 'আটা (Flour)', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400', price: '৳৫৫/কেজি' },
-    { name: 'চিনি (Sugar)', image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=400', price: '৳৭৫/কেজি' }
+    { name: language === 'bangla' ? 'চাল (Rice)' : 'Rice (চাল)', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400', price: language === 'bangla' ? '৳৬৫/কেজি' : '৳65/KG' },
+    { name: language === 'bangla' ? 'ডাল (Lentils)' : 'Lentils (ডাল)', image: 'https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=400', price: language === 'bangla' ? '৳১২০/কেজি' : '৳120/KG' },
+    { name: language === 'bangla' ? 'আটা (Flour)' : 'Flour (আটা)', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400', price: language === 'bangla' ? '৳৫৫/কেজি' : '৳55/KG' },
+    { name: language === 'bangla' ? 'চিনি (Sugar)' : 'Sugar (চিনি)', image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=400', price: language === 'bangla' ? '৳৭৫/কেজি' : '৳75/KG' }
   ];
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
     <div className="min-h-screen bg-gray-50" ref={containerRef}>
+      {/* Language Toggle */}
+      <div className="fixed top-4 right-4 z-50">
+        <motion.button
+          onClick={() => setLanguage(language === 'bangla' ? 'english' : 'bangla')}
+          className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Globe className="w-4 h-4 text-gray-600" />
+          <span className="text-sm font-medium text-gray-700">
+            {language === 'bangla' ? 'EN' : 'বাং'}
+          </span>
+        </motion.button>
+      </div>
+
       {/* Hero Section with Enhanced 3D Bangladesh Map */}
       <section className="hero-section relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">
         {/* Enhanced 3D Bangladesh Map Background */}
@@ -263,7 +417,7 @@ const Home = () => {
               />
             </svg>
 
-            {/* Enhanced Animated Cart with Multiple Effects */}
+            {/* Enhanced Animated Cart with Side Fading (No Rotation) */}
             <div 
               ref={cartRef}
               className="absolute w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-2xl"
@@ -277,9 +431,13 @@ const Home = () => {
               {/* Cart glow effect */}
               <div className="absolute inset-0 bg-yellow-300 rounded-full opacity-0 animate-ping"></div>
               
-              {/* Cart trail effect */}
+              {/* Cart trail effect with side fading */}
               <div className="absolute -top-2 -left-2 w-4 h-4 bg-yellow-200 rounded-full opacity-60 animate-pulse"></div>
               <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-yellow-200 rounded-full opacity-40 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              
+              {/* Side fading effects */}
+              <div className="absolute -left-1 top-1/2 w-2 h-8 bg-gradient-to-t from-transparent via-yellow-200 to-transparent opacity-40 animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+              <div className="absolute -right-1 top-1/2 w-2 h-8 bg-gradient-to-t from-transparent via-yellow-200 to-transparent opacity-40 animate-pulse" style={{ animationDelay: '0.7s' }}></div>
             </div>
 
             {/* Enhanced Floating Elements with Better Animation */}
@@ -355,14 +513,14 @@ const Home = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            {/* Static GroShare Title (No More Rotation) */}
+            {/* Static GroShare Title */}
             <motion.h1 
               className="hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow"
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
             >
-              <span className="text-yellow-400">গ্রো</span>শেয়ার
+              <span className="text-yellow-400">{currentContent.hero.title.split('শেয়ার')[0]}</span>{currentContent.hero.title.includes('শেয়ার') ? 'শেয়ার' : 'Share'}
             </motion.h1>
             
             <motion.p 
@@ -371,9 +529,9 @@ const Home = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              আপনার প্রতিবেশীদের সাথে মিলে পাইকারি দামে খাবার কিনুন। 
+              {currentContent.hero.subtitle}
               <br className="hidden md:block" />
-              <span className="text-yellow-300">একসাথে থাকি, একসাথে সঞ্চয় করি।</span>
+              <span className="text-yellow-300">{currentContent.hero.tagline}</span>
             </motion.p>
 
             <motion.div 
@@ -391,7 +549,7 @@ const Home = () => {
                     to="/dashboard"
                     className="bg-yellow-400 text-green-800 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-300 transition-colors shadow-lg"
                   >
-                    নতুন অর্ডার তৈরি করুন
+                    {currentContent.hero.dashboardButton}
                   </Link>
                 </motion.div>
               ) : (
@@ -404,7 +562,7 @@ const Home = () => {
                       to="/register"
                       className="bg-yellow-400 text-green-800 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-300 transition-colors shadow-lg"
                     >
-                      শুরু করুন
+                      {currentContent.hero.startButton}
                     </Link>
                   </motion.div>
                   <motion.div
@@ -415,14 +573,14 @@ const Home = () => {
                       to="/login"
                       className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 hover:text-green-800 transition-colors"
                     >
-                      সাইন ইন করুন
+                      {currentContent.hero.loginButton}
                     </Link>
                   </motion.div>
                 </>
               )}
             </motion.div>
 
-            {/* Bangladesh Map Icon with Enhanced Animation */}
+            {/* Bangladesh Map Icon with Animated Jumping Location Icon */}
             <motion.div
               className="mt-12"
               initial={{ opacity: 0, y: 20 }}
@@ -434,8 +592,13 @@ const Home = () => {
                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.2)' }}
                 transition={{ duration: 0.3 }}
               >
-                <MapPin className="w-5 h-5 text-yellow-400" />
-                <span className="text-sm">বাংলাদেশের সব জেলায় সেবা</span>
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <MapPin className="w-5 h-5 text-yellow-400" />
+                </motion.div>
+                <span className="text-sm">{currentContent.hero.serviceText}</span>
               </motion.div>
             </motion.div>
           </div>
@@ -453,10 +616,10 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              কেন গ্রোশেয়ার বেছে নেবেন?
+              {currentContent.features.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              আমরা দলগত ক্রয়কে সহজ, সামাজিক এবং সঞ্চয়-কেন্দ্রিক করে তুলি
+              {currentContent.features.subtitle}
             </p>
           </motion.div>
           
@@ -504,10 +667,10 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              কিভাবে কাজ করে
+              {currentContent.howItWorks.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              আপনার প্রতিবেশীদের সাথে অর্থ সঞ্চয় করার সহজ ধাপগুলি
+              {currentContent.howItWorks.subtitle}
             </p>
           </motion.div>
           
@@ -560,10 +723,10 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              জনপ্রিয় পণ্যসমূহ
+              {currentContent.products.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              বাংলাদেশের মানুষের প্রিয় খাবার পাইকারি দামে
+              {currentContent.products.subtitle}
             </p>
           </motion.div>
           
@@ -586,7 +749,7 @@ const Home = () => {
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute top-3 right-3 bg-green-600 text-white px-2 py-1 rounded-full text-xs font-medium">
-                    জনপ্রিয়
+                    {language === 'bangla' ? 'জনপ্রিয়' : 'Popular'}
                   </div>
                 </div>
                 <div className="p-4">
@@ -597,7 +760,7 @@ const Home = () => {
                     {product.price}
                   </p>
                   <button className="w-full mt-3 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors">
-                    অর্ডার করুন
+                    {currentContent.products.orderButton}
                   </button>
                 </div>
               </motion.div>
@@ -606,9 +769,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Bangladesh Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Modern About Us Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
@@ -616,36 +779,102 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              বাংলাদেশের সাথে বেড়ে উঠছি
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              {currentContent.aboutUs.title}
             </h2>
-            <p className="text-xl text-green-100 max-w-2xl mx-auto">
-              দেখুন আমাদের সম্প্রদায় কীভাবে পরিবর্তন আনছে
+            <p className="text-lg text-gray-600 mb-2">
+              {currentContent.aboutUs.subtitle}
             </p>
+            <div className="w-24 h-1 bg-green-500 mx-auto rounded-full"></div>
           </motion.div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {bangladeshStats.map((stat, index) => (
-              <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
+            <motion.div 
+              className="space-y-6"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-4">
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {currentContent.aboutUs.paragraph1}
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {currentContent.aboutUs.paragraph2}
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {currentContent.aboutUs.paragraph3}
+                </p>
+              </div>
+              
+              {/* Tagline */}
+              <motion.div 
+                className="pt-6 border-t border-gray-200"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.1 }}
               >
-                <div className="text-4xl md:text-5xl font-bold mb-2 text-yellow-400">
-                  {stat.number}
-                </div>
-                <div className="text-green-100 font-medium">
-                  {stat.label}
-                </div>
-                <div className="text-sm text-green-200">
-                  {stat.english}
+                <h3 className="text-2xl font-bold text-green-600 mb-2">
+                  {currentContent.aboutUs.tagline}
+                </h3>
+                <div className="flex items-center space-x-2 text-green-500">
+                  <ArrowRight className="w-5 h-5" />
+                  <span className="text-sm font-medium">
+                    {language === 'bangla' ? 'আমাদের সাথে যোগ দিন' : 'Join Us Today'}
+                  </span>
                 </div>
               </motion.div>
-            ))}
+            </motion.div>
+            
+            {/* Visual Elements */}
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="relative">
+                {/* Main Image */}
+                <div className="bg-gradient-to-br from-green-400 to-green-600 rounded-2xl p-8 text-white text-center shadow-2xl">
+                  <Users className="w-16 h-16 mx-auto mb-4 text-white" />
+                  <h4 className="text-xl font-bold mb-2">
+                    {language === 'bangla' ? 'সম্প্রদায় শক্তি' : 'Community Power'}
+                  </h4>
+                  <p className="text-green-100">
+                    {language === 'bangla' ? 'একসাথে আমরা শক্তিশালী' : 'Together We Are Stronger'}
+                  </p>
+                </div>
+                
+                {/* Floating Elements */}
+                <motion.div
+                  className="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <DollarSign className="w-10 h-10 text-green-800" />
+                </motion.div>
+                
+                <motion.div
+                  className="absolute -bottom-4 -left-4 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center shadow-lg"
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Heart className="w-8 h-8 text-white" />
+                </motion.div>
+                
+                <motion.div
+                  className="absolute top-1/2 -right-8 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center shadow-lg"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Star className="w-6 h-6 text-white" />
+                </motion.div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -660,10 +889,10 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              অর্থ সঞ্চয় শুরু করার জন্য প্রস্তুত?
+              {currentContent.cta.title}
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              হাজার হাজার প্রতিবেশীদের সাথে যোগ দিন যারা ইতিমধ্যে অর্থ সঞ্চয় করছে এবং সম্প্রদায় গড়ে তুলছে
+              {currentContent.cta.subtitle}
             </p>
             {user ? (
               <motion.div
@@ -674,7 +903,7 @@ const Home = () => {
                   to="/dashboard"
                   className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-700 transition-colors shadow-lg"
                 >
-                  ড্যাশবোর্ডে যান
+                  {currentContent.cta.dashboardButton}
                 </Link>
               </motion.div>
             ) : (
@@ -686,7 +915,7 @@ const Home = () => {
                   to="/register"
                   className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-700 transition-colors shadow-lg"
                 >
-                  আজই শুরু করুন
+                  {currentContent.cta.startButton}
                 </Link>
               </motion.div>
             )}
