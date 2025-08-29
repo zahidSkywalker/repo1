@@ -528,12 +528,21 @@ const Home = () => {
           <div className="text-center">
             {/* Static GroShare Title */}
             <motion.h1 
-              className="hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow"
+              className="hero-title text-5xl md:text-7xl font-bold mb-6 text-shadow flex items-center justify-center gap-3"
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
             >
               <span className="text-yellow-400">{currentContent.hero.title.split('শেয়ার')[0]}</span>{currentContent.hero.title.includes('শেয়ার') ? 'শেয়ার' : ''}
+              <motion.img
+                src={process.env.REACT_APP_LOGO_URL || 'https://res.cloudinary.com/dbi2rwlso/image/upload/v1756474306/532F6958-41F8-42A3-A67D-41F57A313D45_u81tke.png'}
+                alt="GroShare Logo"
+                className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-xl"
+                initial={{ scale: 0.85, rotate: -6, opacity: 0 }}
+                animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 140, damping: 12, delay: 0.35 }}
+                whileHover={{ rotate: 6, scale: 1.06 }}
+              />
             </motion.h1>
             
             <motion.p 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, ShoppingCart, Heart, Sparkles, ArrowRight } from 'lucide-react';
+import { Users, Heart, Sparkles, ArrowRight } from 'lucide-react';
 
 const About = () => {
   return (
@@ -12,14 +12,15 @@ const About = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-green-100 text-green-700 mb-4"
-          >
-            <ShoppingCart className="w-8 h-8" />
-          </motion.div>
+          <motion.img
+            src={process.env.REACT_APP_LOGO_URL || 'https://res.cloudinary.com/dbi2rwlso/image/upload/v1756474306/532F6958-41F8-42A3-A67D-41F57A313D45_u81tke.png'}
+            alt="GroShare Logo"
+            className="mx-auto mb-4 w-16 h-16 object-contain drop-shadow"
+            initial={{ scale: 0.85, rotate: -6, opacity: 0 }}
+            animate={{ scale: 1, rotate: 0, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 140, damping: 12, delay: 0.1 }}
+            whileHover={{ rotate: 6, scale: 1.06 }}
+          />
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
             About GroShare
           </h1>
