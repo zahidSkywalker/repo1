@@ -321,7 +321,7 @@ const Home = () => {
       ...currentContent.features.community
     },
     {
-      icon: <DollarSign className="w-8 h-8" />,
+      icon: <span className="w-8 h-8 flex items-center justify-center text-green-700 text-2xl">৳</span>,
       ...currentContent.features.savings
     },
     {

@@ -10,9 +10,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <ShoppingCart className="w-5 h-5 text-white" />
-              </div>
+              <img
+                src={process.env.REACT_APP_LOGO_URL || 'https://res.cloudinary.com/dbi2rwlso/image/upload/v1756474306/532F6958-41F8-42A3-A67D-41F57A313D45_u81tke.png'}
+                alt="GroShare Logo"
+                className="w-9 h-9 object-contain"
+              />
               <span className="text-xl font-bold">GroShare</span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
@@ -46,26 +48,28 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
-                  Home
-                </Link>
+                <Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link>
               </li>
               <li>
-                <Link to="/orders" className="text-gray-300 hover:text-white transition-colors">
-                  Browse Orders
-                </Link>
+                <Link to="/orders" className="text-gray-300 hover:text-white transition-colors">Browse Orders</Link>
               </li>
               <li>
-                <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors">
-                  Dashboard
-                </Link>
+                <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors">Dashboard</Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
-                  About Us
-                </Link>
+                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link>
               </li>
             </ul>
+            <div className="mt-4 text-sm text-gray-300 leading-6">
+              <p className="font-semibold mb-1">About GroShare</p>
+              <p>
+                GroShare is Bangladesh's hyperlocal group-buy platform. We help neighbors unite to
+                buy essentials at wholesale prices, strengthen community bonds, and reduce costs.
+              </p>
+              <p className="mt-2">
+                আমাদের লক্ষ্য সহজ—একসাথে কেনাকাটা, একসাথে সঞ্চয়। নিরাপদ, স্বচ্ছ এবং কমিউনিটি-ফার্স্ট অভিজ্ঞতা।
+              </p>
+            </div>
           </div>
 
           {/* Contact Info */}
