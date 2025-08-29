@@ -79,7 +79,14 @@ const Register = () => {
       const result = await register(userData);
       
       if (result.success) {
-        navigate('/dashboard');
+        // Show success message and redirect to home page
+        setError('');
+        navigate('/', { 
+          state: { 
+            message: 'Account created successfully! You can now sign in.',
+            type: 'success'
+          }
+        });
       } else {
         setError(result.error);
       }

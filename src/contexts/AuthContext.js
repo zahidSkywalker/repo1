@@ -43,16 +43,18 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${API_CONFIG.API_BASE_URL}/auth/login`, { email, password });
       const { token: newToken, user: userData } = response.data;
       
+      // Store token and user data
       localStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
-      return { success: true };
+      return { success: true, user: userData };
     } catch (error) {
+      console.error('Login error:', error.response || error);
       return { 
         success: false, 
-        error: error.response?.data?.message || 'Login failed' 
+        error: error.response?.data?.message || error.response?.data?.error || 'Login failed' 
       };
     }
   };
@@ -62,12 +64,13 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${API_CONFIG.API_BASE_URL}/auth/register`, userData);
       const { token: newToken, user: newUser } = response.data;
       
+      // Store token and user data
       localStorage.setItem('token', newToken);
-      setUser(newUser);
       setToken(newToken);
+      setUser(newUser);
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
-      return { success: true };
+      return { success: true, user: newUser };
     } catch (error) {
       console.error('Registration error:', error.response || error);
       return { 

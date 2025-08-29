@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { ShoppingCart, Users, DollarSign, Truck, CheckCircle, Star, MapPin, Clock, Heart, Globe, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Users, DollarSign, Truck, CheckCircle, Star, MapPin, Clock, Heart, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const Home = () => {
   const { user } = useAuth();
+  const location = useLocation();
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const cartRef = useRef(null);
@@ -13,6 +14,7 @@ const Home = () => {
   const isInView = useInView(containerRef, { once: true });
   const [isGSAPLoaded, setIsGSAPLoaded] = useState(false);
   const [language, setLanguage] = useState('bangla'); // 'bangla' or 'english'
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Banner image from env (public Cloudinary secure URL expected)
   const bannerImage = (process.env.REACT_APP_BANNER_IMAGE || '').trim() ||
@@ -311,6 +313,16 @@ const Home = () => {
     };
   }, []);
 
+  // Handle success message from registration
+  useEffect(() => {
+    if (location.state?.message && location.state?.type === 'success') {
+      setShowSuccessMessage(true);
+      // Auto-hide after 5 seconds
+      const timer = setTimeout(() => setShowSuccessMessage(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
   const features = [
     {
       icon: <ShoppingCart className="w-8 h-8" />,
@@ -374,6 +386,19 @@ const Home = () => {
           </span>
         </motion.button>
       </div>
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -50, scale: 0.9 }}
+          className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2"
+        >
+          <CheckCircle2 className="w-5 h-5" />
+          <span>{location.state?.message}</span>
+        </motion.div>
+      )}
 
       {/* Hero Section with Enhanced 3D Bangladesh Map */}
       <section className="hero-section relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white">

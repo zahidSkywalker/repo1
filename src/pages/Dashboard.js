@@ -9,19 +9,19 @@ const Dashboard = () => {
   const quickStats = [
     {
       title: 'Active Orders',
-      value: '3',
+      value: user?.stats?.totalOrders || '0',
       icon: <ShoppingCart className="w-6 h-6" />,
       color: 'bg-blue-500'
     },
     {
       title: 'Total Participants',
-      value: '12',
+      value: '0',
       icon: <Users className="w-6 h-6" />,
       color: 'bg-green-500'
     },
     {
       title: 'Money Saved',
-      value: '$45.20',
+      value: `৳${user?.stats?.totalSpent || '0'}`,
       icon: <DollarSign className="w-6 h-6" />,
       color: 'bg-yellow-500'
     }
@@ -46,22 +46,10 @@ const Dashboard = () => {
 
   const recentActivity = [
     {
-      type: 'order_joined',
-      message: 'You joined "Organic Bananas" order',
-      time: '2 hours ago',
-      status: 'active'
-    },
-    {
-      type: 'order_created',
-      message: 'You created "Fresh Milk" order',
-      time: '1 day ago',
-      status: 'pending'
-    },
-    {
-      type: 'order_completed',
-      message: 'Your "Local Honey" order was completed',
-      time: '3 days ago',
-      status: 'completed'
+      type: 'welcome',
+      message: 'Welcome to GroShare! Start by creating or joining an order.',
+      time: 'Just now',
+      status: 'info'
     }
   ];
 
