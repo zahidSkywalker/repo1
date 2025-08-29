@@ -15,6 +15,7 @@ import Orders from './pages/Orders';
 import CreateOrder from './pages/CreateOrder';
 import NotFound from './pages/NotFound';
 import Products from './pages/Products';
+import About from './pages/About';
 
 // Components
 import Navbar from './components/layout/Navbar';
@@ -36,6 +37,7 @@ const App = () => {
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/orders/create" element={<CreateOrder />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>

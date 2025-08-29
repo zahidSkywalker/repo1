@@ -61,7 +61,6 @@ const Footer = () => {
               </li>
             </ul>
             <div className="mt-4 text-sm text-gray-300 leading-6">
-              <p className="font-semibold mb-1">About GroShare</p>
               <p>
                 GroShare is Bangladesh's hyperlocal group-buy platform. We help neighbors unite to
                 buy essentials at wholesale prices, strengthen community bonds, and reduce costs.
