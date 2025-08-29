@@ -33,7 +33,9 @@ const Products = () => {
         const params = new URLSearchParams();
         if (category && category !== 'All') params.append('category', category);
         if (search) params.append('name', search);
-        const url = `${API_CONFIG.API_BASE_URL}${API_ENDPOINTS.ORDERS.CREATE.replace('/orders', API_ENDPOINTS.HEALTH.replace('/health', '/products'))}?${params.toString()}`;
+        const base = API_CONFIG.API_BASE_URL.endsWith('/')</n+          ? API_CONFIG.API_BASE_URL.slice(0, -1)
+          : API_CONFIG.API_BASE_URL;
+        const url = `${base}/products${params.toString() ? `?${params.toString()}` : ''}`;
         const res = await fetch(url);
         const data = await handleApiResponse(res);
         setProducts(Array.isArray(data.products) ? data.products : []);
