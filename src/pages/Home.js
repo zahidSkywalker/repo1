@@ -356,8 +356,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" ref={containerRef}>
-      {/* Language Toggle */}
-      <div className="fixed top-4 right-4 z-50">
+      {/* Language Toggle - Repositioned to avoid hamburger overlap */}
+      <div className="fixed top-4 right-20 z-50">
         <motion.button
           onClick={() => setLanguage(language === 'bangla' ? 'english' : 'bangla')}
           className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300"
@@ -417,13 +417,15 @@ const Home = () => {
               />
             </svg>
 
-            {/* Enhanced Animated Cart with Side Fading (No Rotation) */}
+            {/* Enhanced Animated Cart with Side Fading (No Rotation) - Better positioned */}
             <div 
               ref={cartRef}
               className="absolute w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-2xl"
               style={{ 
                 transformOrigin: 'center',
-                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))'
+                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+                top: '40%',
+                left: '60%'
               }}
             >
               <ShoppingCart className="w-6 h-6 text-green-800" />
@@ -520,7 +522,7 @@ const Home = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
             >
-              <span className="text-yellow-400">{currentContent.hero.title.split('শেয়ার')[0]}</span>{currentContent.hero.title.includes('শেয়ার') ? 'শেয়ার' : 'Share'}
+              <span className="text-yellow-400">{currentContent.hero.title.split('শেয়ার')[0]}</span>{currentContent.hero.title.includes('শেয়ার') ? 'শেয়ার' : ''}
             </motion.h1>
             
             <motion.p 
@@ -855,7 +857,7 @@ const Home = () => {
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <DollarSign className="w-10 h-10 text-green-800" />
+                  <span className="text-2xl font-bold text-green-800">৳</span>
                 </motion.div>
                 
                 <motion.div
