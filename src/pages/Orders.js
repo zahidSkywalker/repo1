@@ -66,7 +66,6 @@ const Orders = () => {
   // Load from backend
   useEffect(() => {
     fetchOrders();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   // Live updates via socket
@@ -81,7 +80,6 @@ const Orders = () => {
       socket.off('order-completed', onUpdate);
       socket.off('payment-completed', onUpdate);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket, token]);
 
   const filteredOrders = orders.filter(order => {
