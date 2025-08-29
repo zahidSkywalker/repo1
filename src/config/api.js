@@ -9,8 +9,8 @@ const config = {
   
   // Production (Render.com backend)
   production: {
-    API_BASE_URL: 'https://your-backend-name.onrender.com/api',
-    SOCKET_URL: 'https://your-backend-name.onrender.com',
+    API_BASE_URL: process.env.REACT_APP_API_BASE_URL || 'https://groshare-backend.onrender.com/api',
+    SOCKET_URL: process.env.REACT_APP_SOCKET_URL || 'https://groshare-backend.onrender.com',
     ENVIRONMENT: 'production'
   }
 };
