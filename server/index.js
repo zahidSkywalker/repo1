@@ -11,6 +11,7 @@ const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/orders');
 const userRoutes = require('./routes/users');
 const paymentRoutes = require('./routes/payments');
+const productsRoutes = require('./routes/products');
 const { authenticateToken } = require('./middleware/auth');
 
 const app = express();
@@ -74,6 +75,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/orders', authenticateToken, orderRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
 app.use('/api/payments', authenticateToken, paymentRoutes);
+app.use('/api/products', productsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

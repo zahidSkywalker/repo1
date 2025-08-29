@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Orders from './pages/Orders';
 import CreateOrder from './pages/CreateOrder';
 import NotFound from './pages/NotFound';
+import Products from './pages/Products';
 
 // Components
 import Navbar from './components/layout/Navbar';
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/orders/create" element={<CreateOrder />} />
+                <Route path="/products" element={<Products />} />
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>

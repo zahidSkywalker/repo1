@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name_en": "Miniket Rice",
+    "name_bn": "মিনিকেট চাল",
+    "category": "Rice",
+    "price": 70,
+    "unit": "kg",
+    "stock": 200,
+    "image": "https://images.unsplash.com/photo-1606788075761-66d5b3e5d6d2"
+  },
+  {
+    "id": 2,
+    "name_en": "Atop Rice",
+    "name_bn": "আতপ চাল",
+    "category": "Rice",
+    "price": 65,
+    "unit": "kg",
+    "stock": 150,
+    "image": "https://images.unsplash.com/photo-1606788075700-plain-rice"
+  },
+  {
+    "id": 3,
+    "name_en": "Moshur Dal",
+    "name_bn": "মসুর ডাল",
+    "category": "Lentils",
+    "price": 130,
+    "unit": "kg",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1606787649440-moshur-dal"
+  },
+  {
+    "id": 4,
+    "name_en": "Cholar Dal",
+    "name_bn": "ছোলার ডাল",
+    "category": "Lentils",
+    "price": 140,
+    "unit": "kg",
+    "stock": 80,
+    "image": "https://images.unsplash.com/photo-1606787649339-cholar-dal"
+  },
+  {
+    "id": 5,
+    "name_en": "Soybean Oil",
+    "name_bn": "সয়াবিন তেল",
+    "category": "Oil",
+    "price": 180,
+    "unit": "liter",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1585238342028-3d2f0a6fbbd2"
+  },
+  {
+    "id": 6,
+    "name_en": "Mustard Oil",
+    "name_bn": "সরিষার তেল",
+    "category": "Oil",
+    "price": 220,
+    "unit": "liter",
+    "stock": 60,
+    "image": "https://images.unsplash.com/photo-1585238342000-mustard-oil"
+  },
+  {
+    "id": 7,
+    "name_en": "Hilsa Fish",
+    "name_bn": "ইলিশ মাছ",
+    "category": "Fish",
+    "price": 1200,
+    "unit": "kg",
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1617196033730-hilsa-fish"
+  },
+  {
+    "id": 8,
+    "name_en": "Rui Fish",
+    "name_bn": "রুই মাছ",
+    "category": "Fish",
+    "price": 350,
+    "unit": "kg",
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1617196033725-f3cfd5401397"
+  },
+  {
+    "id": 9,
+    "name_en": "Chicken Broiler",
+    "name_bn": "ব্রয়লার মুরগি",
+    "category": "Meat",
+    "price": 220,
+    "unit": "kg",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1589927986089-35812388d1d3"
+  },
+  {
+    "id": 10,
+    "name_en": "Beef",
+    "name_bn": "গরুর মাংস",
+    "category": "Meat",
+    "price": 750,
+    "unit": "kg",
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1603048297172-beef-meat"
+  },
+  {
+    "id": 11,
+    "name_en": "Mutton",
+    "name_bn": "খাসির মাংস",
+    "category": "Meat",
+    "price": 950,
+    "unit": "kg",
+    "stock": 30,
+    "image": "https://images.unsplash.com/photo-1598514982221-mutton"
+  },
+  {
+    "id": 12,
+    "name_en": "Potato",
+    "name_bn": "আলু",
+    "category": "Vegetables",
+    "price": 35,
+    "unit": "kg",
+    "stock": 500,
+    "image": "https://images.unsplash.com/photo-1582515073490-dc0d7f94f7f6"
+  },
+  {
+    "id": 13,
+    "name_en": "Onion",
+    "name_bn": "পেঁয়াজ",
+    "category": "Vegetables",
+    "price": 80,
+    "unit": "kg",
+    "stock": 300,
+    "image": "https://images.unsplash.com/photo-1604908177522-04090f2e9b36"
+  },
+  {
+    "id": 14,
+    "name_en": "Tomato",
+    "name_bn": "টমেটো",
+    "category": "Vegetables",
+    "price": 90,
+    "unit": "kg",
+    "stock": 150,
+    "image": "https://images.unsplash.com/photo-1582515758745-tomato"
+  },
+  {
+    "id": 15,
+    "name_en": "Green Chili",
+    "name_bn": "কাঁচা মরিচ",
+    "category": "Vegetables",
+    "price": 120,
+    "unit": "kg",
+    "stock": 150,
+    "image": "https://images.unsplash.com/photo-1617196033740-green-chili"
+  },
+  {
+    "id": 16,
+    "name_en": "Eggs",
+    "name_bn": "ডিম",
+    "category": "Dairy",
+    "price": 120,
+    "unit": "dozen",
+    "stock": 200,
+    "image": "https://images.unsplash.com/photo-1604908177400-eggs"
+  },
+  {
+    "id": 17,
+    "name_en": "Milk",
+    "name_bn": "দুধ",
+    "category": "Dairy",
+    "price": 70,
+    "unit": "liter",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1582719478175-1a8e9f9a3c56"
+  },
+  {
+    "id": 18,
+    "name_en": "Bread",
+    "name_bn": "পাউরুটি",
+    "category": "Bakery",
+    "price": 40,
+    "unit": "packet",
+    "stock": 100,
+    "image": "https://images.unsplash.com/photo-1608198093002-bread"
+  },
+  {
+    "id": 19,
+    "name_en": "Horlicks",
+    "name_bn": "হরলিক্স",
+    "category": "Beverages",
+    "price": 380,
+    "unit": "jar",
+    "stock": 50,
+    "image": "https://images.unsplash.com/photo-1612197523874-horlicks"
+  },
+  {
+    "id": 20,
+    "name_en": "Nestle Nescafe",
+    "name_bn": "নেস্কাফে কফি",
+    "category": "Beverages",
+    "price": 320,
+    "unit": "100g",
+    "stock": 40,
+    "image": "https://images.unsplash.com/photo-1598514982221-nescafe"
+  }
+]
