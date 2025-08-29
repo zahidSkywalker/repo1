@@ -10,8 +10,11 @@ router.post('/register', [
   body('name').trim().isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
   body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-  body('phone').optional().isMobilePhone('bn-BD').withMessage('Valid Bangladesh phone number required'),
-  body('location').optional().isObject().withMessage('Location must be an object')
+  body('phone').isMobilePhone('bn-BD').withMessage('Valid Bangladesh phone number required'),
+  body('address').isObject().withMessage('Address must be an object'),
+  body('address.street').notEmpty().withMessage('Street address is required'),
+  body('address.city').notEmpty().withMessage('City is required'),
+  body('address.postalCode').notEmpty().withMessage('Postal code is required')
 ], async (req, res) => {
   try {
     // Check validation errors
@@ -20,7 +23,7 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, phone, location } = req.body;
+    const { name, email, password, phone, address } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -38,7 +41,7 @@ router.post('/register', [
       email,
       password: hashedPassword,
       phone,
-      location
+      address
     });
 
     await user.save();
